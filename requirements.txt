@@ -1,0 +1,5 @@
+selectolax
+aiohttp
+tqdm
+fastapi
+uvicorn
