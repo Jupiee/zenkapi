@@ -176,3 +176,7 @@ Note: Currently all tag units are marked as false, this will be fixed when the A
 - Implementation for getting data of transformed characters
 - Implementation for getting data of tag units
 - Implementation for getting sorted data
+
+## License
+
+[MIT License](LICENSE)
