@@ -40,12 +40,12 @@ characters | Get all characters ( default limit is 2 ) | ```zenkapi/v1/character
 | --------- | ---- | ----------- | ------- 
 | name | str | Name of the character | ```zenkapi/characters?name=Zamasu``` returns all characters that have the name Zamasu
 | contains | str | String that is in the name | ```zenkapi/characters?contains=Super%20Saiyan``` returns all characters that have Super Saiyan in their name
-| id | int | ID of the character | ```zenkapi/characters?id=DBL58-01S``` returns the character with ID DBL58-01S
+| id | str | ID of the character | ```zenkapi/characters?id=DBL58-01S``` returns the character with ID DBL58-01S
 | has_zenkai | bool | If the character has a Zenkai | ```zenkapi/characters?has_zenkai=true``` returns all characters that have Zenkai
 | is_lf | bool | If the character is a Legends Limited unit | ```zenkapi/characters?is_lf=true``` returns all characters that are Legends Limited
 | is_tag | bool | If the character is a tag unit | ```zenkapi/characters?is_tag=true``` returns all characters that are tag units
 | color | str | Color of the character | ```zenkapi/characters?color=BLU,PUR``` returns all characters with the color Blue or Purple
-| rarity | int | Rarity of the character | ```zenkapi/characters?rarity=ULTRA,SPARKING``` returns all characters with the rarity Ultra or Sparking
+| rarity | str | Rarity of the character | ```zenkapi/characters?rarity=ULTRA,SPARKING``` returns all characters with the rarity Ultra or Sparking
 | tags | str | Tags of the character | ```zenkapi/characters?tags=God%20Ki,Fusion%20Warrior``` returns all characters with the tag God Ki and Fusion Warrior
 | limit | int | Limit of the results ( limit is 2 if not specified ) | ```zenkapi/characters?limit=10``` returns the first 10 characters
 

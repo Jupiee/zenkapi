@@ -1,6 +1,6 @@
 from DBLscraper import Scraper
 from tqdm import tqdm
-import asyncio
+import asyncio, time
 
 async def main():
 
@@ -18,6 +18,8 @@ async def main():
 
     extracted_links= scraper.fetch_links(html)
 
+    start_time= time.time()
+
     for link in tqdm(extracted_links, desc= "collecting data", unit= "character"):
 
         response= await scraper.get_html(link)
@@ -26,11 +28,13 @@ async def main():
 
         characters.append(character)
 
+    end_time= time.time()
+
     await scraper.close_session()
 
     scraper.generate_json(characters)
 
-    print("\ndone")
+    print(f"\ndone in {(end_time - start_time) * 1000 : .2f} ms")
 
 if __name__ == "__main__":
 

@@ -23,7 +23,7 @@ class Scraper:
                 
                 elif response.status == 403:
 
-                    await asyncio.sleep(1)
+                    await asyncio.sleep(5)
         
     async def close_session(self):
 
