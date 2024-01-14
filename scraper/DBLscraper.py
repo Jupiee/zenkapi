@@ -1,37 +1,41 @@
-from selectolax.parser import HTMLParser
+from selectolax.lexbor import LexborHTMLParser
 from models import *
 
-import aiohttp, json, asyncio
+import json, asyncio, httpx
 
 class Scraper:
 
     def __init__(self):
 
-        self.session= aiohttp.ClientSession()
+        self.timeout= httpx.Timeout(connect= None, read= None, write= None, pool= None)
+        self.session= httpx.AsyncClient(timeout= self.timeout)
+        #self.session= aiohttp.ClientSession()
 
     async def get_html(self, path):
 
-        params= {"User-Agent": "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Mobile Safari/537.36"}
+        params= {"User-Agent": "Mozilla/5.0 (U; Linux x86_64) Gecko/20130401 Firefox/58.3"}
 
         while True:
 
-            async with self.session.get(f"https://legends.dbz.space{path}", params= params) as response:
-
-                if response.status == 200:
-
-                    return await response.text()
+            #async with self.session.get(f"https://legends.dbz.space{path}", params= params) as response:
                 
-                elif response.status == 403:
+            response= await self.session.get(f"https://legends.dbz.space{path}", headers= params)
 
-                    await asyncio.sleep(5)
+            if response.status_code == 200:
+
+                return response.text
+            
+            elif response.status_code == 403:
+
+                await asyncio.sleep(5)
         
     async def close_session(self):
 
-        await self.session.close()
+        await self.session.aclose()
 
     def fetch_links(self, html):
 
-        parser= HTMLParser(html)
+        parser= LexborHTMLParser(html)
 
         links= map(self.fetch_hrefs, parser.css_first("div.chara.list").css("a"))
 
@@ -43,7 +47,7 @@ class Scraper:
     
     def extract_tags(self, html, selector):
 
-        parser= HTMLParser(html)
+        parser= LexborHTMLParser(html)
 
         tags= list(set(tag.text() for tag in parser.css_first(selector).css("a")))
         effect= parser.css_first(selector).text()
@@ -56,7 +60,7 @@ class Scraper:
 
     def fetch_data(self, html, selector, type):
 
-        parser= HTMLParser(html)
+        parser= LexborHTMLParser(html)
 
         if type == "single":
 
@@ -121,7 +125,7 @@ class Scraper:
         base_stats= Stats(*base_stats_list)
         max_stats= Stats(*max_stats_list)
 
-        image_url= HTMLParser(html).css_first("img.cutin.trs0.form0").attributes["src"]
+        image_url= LexborHTMLParser(html).css_first("img.cutin.trs0.form0").attributes["src"]
 
         strike_info= self.fetch_data(html, "a#charastrike + div.ability_text.arts div.frm.form0 div.ability_text.small", "single")
         shot_info= self.fetch_data(html, "a#charashot + div.ability_text.arts div.frm.form0 div.ability_text.small", "single")
@@ -152,7 +156,7 @@ class Scraper:
         z3= self.extract_tags(html, "div.zability.zIII div.ability_text.medium")
         z4= self.extract_tags(html, "div.zability.zIV div.ability_text.medium")
 
-        is_lf= True if HTMLParser(html).css_first("img.legends-limited") else False
+        is_lf= True if LexborHTMLParser(html).css_first("img.legends-limited") else False
 
         zabilities= ZAbilities(ZAbility(*z1), ZAbility(*z2), ZAbility(*z3), ZAbility(*z4))
 

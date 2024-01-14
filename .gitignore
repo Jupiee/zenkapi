@@ -1,6 +1,6 @@
 .DS_store
 .vscode
 
-/scraper/__pycache__
-/utils/__pycache__
+/scraper/**/__pycache__
 /scraper/characters.json
+/utils/__pycache__

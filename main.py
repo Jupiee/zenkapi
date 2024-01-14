@@ -4,7 +4,7 @@ from utils import filter_characters
 
 import uvicorn
 
-VERSION= "1.0.0"
+VERSION= "1.1.0"
 
 app= FastAPI(title= "ZenkApi", version= VERSION)
 api_router= APIRouter()

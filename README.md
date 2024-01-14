@@ -1,5 +1,5 @@
 [license-img]: https://img.shields.io/badge/License-MIT-white.svg
-# ZenkApi v1.0.0
+# ZenkApi v1.1.0
 ![license-img][]
 
 ![vegito.png](assets/vegito.png)
