@@ -1,5 +1,5 @@
 selectolax
-aiohttp
+httpx
 tqdm
 fastapi
 uvicorn
